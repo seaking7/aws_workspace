@@ -2,6 +2,29 @@ resource "aws_iam_user" "duke" {
   name = "duke"
 }
 
+
+resource "aws_iam_user_policy" "terraform-user-policy" {
+  name  = "super-admin"
+  user  = aws_iam_user.duke.name
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+EOF
+}
+
 resource "aws_iam_group" "devops_group" {
   name = "devops"
 }
