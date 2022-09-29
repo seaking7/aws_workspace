@@ -71,7 +71,7 @@ resource "aws_iam_role_policy" "terraform_s3_role" {
     {
       "Sid": "AllowAppArtifactsReadAccess",
       "Action": [
-        "s3:GetObject"
+        "s3:*"
       ],
       "Resource": [
         "*"
