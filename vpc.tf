@@ -37,6 +37,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
+# elastic ip
 resource "aws_eip" "nat" {
   vpc   = true
 
@@ -67,6 +68,7 @@ resource "aws_route_table" "public" {
   }
 }
 
+# public subnet에 public route 할당
 resource "aws_route_table_association" "route_table_association_public" {
   subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public.id
@@ -85,6 +87,7 @@ resource "aws_route_table_association" "route_table_association_private" {
   route_table_id = aws_route_table.private.id
 }
 
+# private route에 nat 라우팅 추가
 resource "aws_route" "private_nat" {
   route_table_id              = aws_route_table.private.id
   destination_cidr_block      = "0.0.0.0/0"
