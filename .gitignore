@@ -1,0 +1,8 @@
+
+.idea/
+
+*.hcl
+
+vpc/.terraform/
+
+*.tfstate
