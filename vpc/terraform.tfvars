@@ -4,7 +4,7 @@ iam_user_list = ["duke"]
 
 
 image_id = "ami-064c81ce3a290fde1"
-availability_zone_names = ["us-west-1a","us-west-1b","us-west-1c"]
+availability_zone_names = ["ap-northeast-2a","ap-northeast-2b","ap-northeast-2c"]
 ami_id_maps = {
     ap-northeast-2 = {
       amazon_linux2 = "ami-010bf43fe22f847ed"

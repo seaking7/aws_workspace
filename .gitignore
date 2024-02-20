@@ -3,6 +3,6 @@
 
 *.hcl
 
-vpc/.terraform/
+*/.terraform/
 
 *.tfstate

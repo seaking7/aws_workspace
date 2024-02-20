@@ -13,7 +13,7 @@ variable "image_id" {
 
 variable "availability_zone_names" {
   type    = list(string)
-  default = ["us-west-1a"]
+  default = ["ap-northeast-2a"]
 }
 
 variable "ami_id_maps" {
