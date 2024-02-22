@@ -1,5 +1,6 @@
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
+  enable_dns_hostnames = true
 
   tags = {
     Name = "tf-vpc"
@@ -9,6 +10,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public_subnet_1" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.public_cidr[0]
+  map_public_ip_on_launch = true
 
   availability_zone = "ap-northeast-2a"
 
@@ -20,6 +22,7 @@ resource "aws_subnet" "public_subnet_1" {
 resource "aws_subnet" "public_subnet_2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.public_cidr[1]
+  map_public_ip_on_launch = true
 
   availability_zone = "ap-northeast-2c"
 
@@ -40,6 +43,7 @@ resource "aws_subnet" "private_subnet_1" {
   }
 }
 
+
 resource "aws_subnet" "private_subnet_2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.private_cidr[1]
@@ -58,6 +62,7 @@ resource "aws_internet_gateway" "igw" {
     Name = "tf-igw"
   }
 }
+
 
 # elastic ip
 resource "aws_eip" "nat" {
@@ -108,6 +113,8 @@ resource "aws_route_table" "private" {
     Name = "tf-rt-private"
   }
 }
+
+
 
 resource "aws_route_table_association" "route_table_association_private_1" {
   subnet_id      = aws_subnet.private_subnet_1.id

@@ -1,18 +1,30 @@
 
+## VPC, subnet, igw, nat, routing table
 module "tf_vpc" {
   source = "./modules/vpc"
   aws_region = var.aws_region
   vpc_cidr = var.vpc_cidr
-  public_cidr = var.public_cidr
-  private_cidr = var.private_cidr
+  public_cidr = var.public_cidr_blocks
+  private_cidr = var.private_cidr_blocks
   
 }
 
+## EKS, EKS NODE
 module "tf_eks" {
   source = "./modules/eks"
   aws_region = var.aws_region
   eks-cluster-name = var.eks-cluster-name
   vpc_id = module.tf_vpc.vpc_id
-  subnet_id_1 = module.tf_vpc.public_subnet_1_id
-  subnet_id_2 = module.tf_vpc.public_subnet_2_id
+  subnet_ids = module.tf_vpc.public_subnet_ids
+}
+
+## MSK
+module "tf_msk" {
+  source = "./modules/msk"
+  aws_region = var.aws_region
+  global_prefix = var.global_prefix
+  vpc_id = module.tf_vpc.vpc_id
+  subnet_ids = module.tf_vpc.public_subnet_ids
+  public_cidr_blocks = var.public_cidr_blocks
+  private_cidr_blocks = var.private_cidr_blocks
 }
