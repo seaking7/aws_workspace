@@ -5,6 +5,8 @@
 
 */.terraform/
 */.terraform*
+.terraform/
+.terraform*
 
 */*.tfstate
 */*.tfstate.backup

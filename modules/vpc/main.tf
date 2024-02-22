@@ -1,5 +1,5 @@
 resource "aws_vpc" "main" {
-  cidr_block       = "10.0.0.0/16"
+  cidr_block       = var.vpc_cidr
 
   tags = {
     Name = "tf-vpc"
@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_subnet_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = var.public_cidr[0]
 
   availability_zone = "ap-northeast-2a"
 
@@ -19,7 +19,7 @@ resource "aws_subnet" "public_subnet_1" {
 
 resource "aws_subnet" "public_subnet_2" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.2.0/24"
+  cidr_block = var.public_cidr[1]
 
   availability_zone = "ap-northeast-2c"
 
@@ -31,7 +31,7 @@ resource "aws_subnet" "public_subnet_2" {
 
 resource "aws_subnet" "private_subnet_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.3.0/24"
+  cidr_block = var.private_cidr[0]
 
   availability_zone = "ap-northeast-2a"
 
@@ -42,7 +42,7 @@ resource "aws_subnet" "private_subnet_1" {
 
 resource "aws_subnet" "private_subnet_2" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.4.0/24"
+  cidr_block = var.private_cidr[1]
 
   availability_zone = "ap-northeast-2c"
 
@@ -68,15 +68,15 @@ resource "aws_eip" "nat" {
   }
 }
 
-resource "aws_nat_gateway" "nat_gateway" {
-  allocation_id = aws_eip.nat.id
+# resource "aws_nat_gateway" "nat_gateway" {
+#   allocation_id = aws_eip.nat.id
 
-  subnet_id = aws_subnet.public_subnet_1.id
+#   subnet_id = aws_subnet.public_subnet_1.id
 
-  tags = {
-    Name = "tf-NAT-GW"
-  }
-}
+#   tags = {
+#     Name = "tf-NAT-GW"
+#   }
+# }
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
@@ -121,8 +121,8 @@ resource "aws_route_table_association" "route_table_association_private_2" {
 }
 
 # private route에 nat 라우팅 추가
-resource "aws_route" "private_nat" {
-  route_table_id              = aws_route_table.private.id
-  destination_cidr_block      = "0.0.0.0/0"
-  nat_gateway_id              = aws_nat_gateway.nat_gateway.id
-}
+# resource "aws_route" "private_nat" {
+#   route_table_id              = aws_route_table.private.id
+#   destination_cidr_block      = "0.0.0.0/0"
+#   nat_gateway_id              = aws_nat_gateway.nat_gateway.id
+# }
