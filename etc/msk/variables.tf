@@ -30,5 +30,6 @@ locals {
   name = "ssp-test2"
   vpc = "vpc-03e87995936924eb2"
   subnet_ids      = ["subnet-065400bba8c35c98b","subnet-05e1bf16b38805205"]
+  availability_zones      = ["ap-northeast-2a", "ap-northeast-2b"]
   broker_node_security_groups = ["sg-0d98cab2e93226e7e"]
 }
