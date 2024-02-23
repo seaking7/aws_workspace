@@ -3,13 +3,13 @@ provider "aws" {
 }
 
 # S3 bucket for backend
-resource "aws_s3_bucket" "tfstate" {
-  bucket = "tf101-seaking7-apne2-tfstate"
+# resource "aws_s3_bucket" "tfstate" {
+#   bucket = "seaking7-tfstate"
 
-  versioning {
-    enabled = true # Prevent from deleting tfstate file
-  }
-}
+#   versioning {
+#     enabled = true # Prevent from deleting tfstate file
+#   }
+# }
 
 # DynamoDB for terraform state lock
 resource "aws_dynamodb_table" "terraform_state_lock" {

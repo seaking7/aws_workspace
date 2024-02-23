@@ -4,7 +4,7 @@ resource "aws_security_group" "test-sg-eks-cluster" {
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "test-sg-eks-cluster"
+    Name = "sg-tf-eks-cluster"
   }
 }
 

@@ -28,3 +28,14 @@ module "tf_msk" {
   public_cidr_blocks = var.public_cidr_blocks
   private_cidr_blocks = var.private_cidr_blocks
 }
+
+## ElastiCache
+module "tf_redis" {
+  source = "./modules/redis"
+  aws_region = var.aws_region
+  global_prefix = var.global_prefix
+  vpc_id = module.tf_vpc.vpc_id
+  subnet_ids = module.tf_vpc.public_subnet_ids
+  public_cidr_blocks = var.public_cidr_blocks
+  private_cidr_blocks = var.private_cidr_blocks
+}

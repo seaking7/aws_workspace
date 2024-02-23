@@ -5,7 +5,7 @@ resource "aws_rds_cluster" "postgresql" {
 #   engine_mode = "provisioned"
 #   engine_version = "15.4"
   port = 5432
-  availability_zones      = local.availability_zones
+  availability_zones      = aws_availability_zones
   db_subnet_group_name = aws_db_subnet_group.default.name
   database_name           = "mydb"
   master_username         = "foo"
@@ -13,7 +13,7 @@ resource "aws_rds_cluster" "postgresql" {
   backup_retention_period = 5
   preferred_backup_window = "04:00-06:00"
 #   tags = "ssp-aurora-db"
-  vpc_security_group_ids = local.broker_node_security_groups
+  vpc_security_group_ids = [aws_security_group.rds.id]
   final_snapshot_identifier = "ssp-aurora-final-snapshot"
   skip_final_snapshot = true # 상용에서는 false 검토
 
@@ -28,7 +28,7 @@ resource "aws_rds_cluster" "postgresql" {
 
 resource "aws_db_subnet_group" "default" {
   name       = "main"
-  subnet_ids = local.subnet_ids
+  subnet_ids = var.subnet_ids
 
   tags = {
     Name = "My DB subnet group"
